@@ -44,13 +44,6 @@ def rate_limited(max_per_second):
     return decorate
 
 
-def title_case(line):
-    """
-    Capitalizes text according to title case.
-    """
-    return ' '.join([s[0].upper() + s[1:] for s in line.split(' ')])
-
-
 class SongInfo(object):
     """
     Holds information about an audio file.
@@ -112,7 +105,7 @@ class EchoNestTerms(object):
         genre = []
         for term in artist.get_terms(sort='weight', cache=True):
             if term['weight'] >= 0.5:
-                genre.append(title_case(term['name']))
+                genre.append(term['name'].title())
         info.genre = genre
 
 
