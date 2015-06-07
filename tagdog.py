@@ -122,6 +122,16 @@ class EchoNestTerms(object):
         info.genre = genre
 
 
+class GenreCaseFixer(object):
+    """
+    Fixes genre casing.
+    """
+
+    def populate(self, info):
+        if info.genre:
+            info.genre = [genre_case(s) for s in info.genre]
+
+
 class TagUpdater(object):
     """
     Updates tags in audio files.
