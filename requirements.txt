@@ -1,2 +1,3 @@
 mutagen==1.29
 pyechonest==9.0.0
+titlecase==0.7.2

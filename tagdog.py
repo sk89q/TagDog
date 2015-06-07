@@ -7,9 +7,22 @@ import threading
 import argparse
 from functools import wraps
 from os.path import join, getsize, splitext, basename, abspath
+import titlecase
 from mutagen.easyid3 import EasyID3
 from pyechonest import config as en_config
 from pyechonest import artist as en_artist
+
+
+genre_case_override = {
+    "r&b": "R&B",
+}
+
+
+def genre_case(genre):
+    def callback(word, **kwargs):
+        if word.lower() in genre_case_override:
+            return genre_case_override[word.lower()]
+    return titlecase.titlecase(genre, callback)
 
 
 def rate_limited(max_per_second):
@@ -105,7 +118,7 @@ class EchoNestTerms(object):
         genre = []
         for term in artist.get_terms(sort='weight', cache=True):
             if term['weight'] >= 0.5:
-                genre.append(term['name'].title())
+                genre.append(genre_case(term['name']))
         info.genre = genre
 
 
